@@ -2211,7 +2211,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 248bb03864dc36548ae4f1973dc26e6e, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4280269335
+    rgba: 4279171330
 --- !u!114 &114147767505655282
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2479,9 +2479,10 @@ MonoBehaviour:
   - {fileID: 114424001343431464}
   - {fileID: 114451402619244934}
   CrosshairScreen: {fileID: 114189547510171262}
+  MessageScreen: {fileID: 114872837984168598}
   MainComponents:
   - {fileID: 1893356294401264}
-  - {fileID: 1581719433183318}
+  - {fileID: 1812130481664258}
   Crosshair: {fileID: 1258758390450542}
   CrosshairScreenBorder: {fileID: 1927397681307928}
   MessageScreenBorder: {fileID: 1553656009260382}

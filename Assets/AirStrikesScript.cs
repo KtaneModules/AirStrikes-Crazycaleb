@@ -16,6 +16,8 @@ public class AirStrikesScript : MonoBehaviour
     public KMSelectable[] TriangleArrows;
     public KMSelectable[] ChevronArrows;
     public KMSelectable CrosshairScreen;
+    public KMSelectable MessageScreen;
+
     public GameObject[] MainComponents;
     public GameObject Crosshair;
     public GameObject CrosshairScreenBorder;
@@ -43,6 +45,7 @@ public class AirStrikesScript : MonoBehaviour
     private float elapsed = 0f;
     private int currentLocation;
     private int startingLocation;
+    private int finalLocation;
 
     private void Awake()
     {
@@ -54,7 +57,8 @@ public class AirStrikesScript : MonoBehaviour
              ChevronArrows[j].OnInteract += delegate () { return HandleMovement( ChevronArrows[j], j); };
         }
         //Assign Screen button
-        CrosshairScreen.OnInteract += delegate () { return ResetLocation(); };
+        CrosshairScreen.OnInteract += delegate () { return SubmitLocation(); };
+          MessageScreen.OnInteract += delegate () { return ResetLocation(); };
     }
     private void Start()
     {
@@ -82,13 +86,12 @@ public class AirStrikesScript : MonoBehaviour
         DisplayModule(startingArray);
 
         Debug.LogFormat("[Air Strikes #{0}] Starting Location: {1}", _moduleId, locations[startingLocation]);
-
     }
 
     //Arrow OnInteractHandler
     private bool HandleMovement(KMSelectable arrow, int index)
     {
-        GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, arrow.transform);
+        Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, arrow.transform);
         arrow.AddInteractionPunch(.25f);
         switch (index)
         {
@@ -111,17 +114,25 @@ public class AirStrikesScript : MonoBehaviour
         return false;
     }
 
-    //Screen onInteractHandler
+    //Message Screen onInteract Handler
     private bool ResetLocation()
     {
         currentLocation = startingLocation;
         Debug.Log(currentLocation); //DEBUG CURRENT LOCATION
-        if (soundOnClick) { }; // Onclick custom sound
+        if (soundOnClick) { Audio.PlaySoundAtTransform("HingeTap", transform); }; // Onclick custom sound
+        return false;
+    }
+
+    //Crosshair Screen onInteract Handler
+    private bool SubmitLocation()
+    {
+        Audio.PlaySoundAtTransform("airStrikesSubmitSound", transform); // Onclick custom sound
+        if (currentLocation != finalLocation) Module.HandleStrike();
 
         return false;
     }
 
-    //Boolean array for 
+    //Boolean array
     private bool[] GenerateBoolArray(int initialPosition)
     {
         bool[] arr = new bool[16];
@@ -140,6 +151,7 @@ public class AirStrikesScript : MonoBehaviour
         return arr;
     }
 
+    //Generate module based on the boolean array.
     private void DisplayModule(bool[] arr)
     {
         //Arrow types are triangular and chevron. 
@@ -161,10 +173,10 @@ public class AirStrikesScript : MonoBehaviour
         //Border colors are Black and White.
         int messageBorderColorIndex
             = arr[13] ? 0 : 1;
-        //Status Light directional are TR, TL, BR, BL. TR,BR,BL,TL
+        //Status Light directional are TR, BR, BL, TL
         int statusLightPosition
             = arr[8] && arr[15] ? 0 : (arr[8] ? 3 : (arr[15] ? 1 : 2));
-        //Plays sound when center screen is clicked.
+        //Flips the crosshair and message screens.
         bool flippedScreens
             = arr[14];
 
