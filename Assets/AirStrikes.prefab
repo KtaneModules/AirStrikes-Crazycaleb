@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 33779359969434180}
   - component: {fileID: 23994376192165834}
   m_Layer: 0
-  m_Name: Screen
+  m_Name: ScreenBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -554,7 +554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4046194372890044}
   m_Layer: 0
-  m_Name: Tomfuckery
+  m_Name: ModuleBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 33837714840252236}
   - component: {fileID: 23463915025171526}
   m_Layer: 0
-  m_Name: default
+  m_Name: ScreenBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1043,7 +1043,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1713080922715150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.353831, y: -2.7576773, z: -4.3985}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4584571600674090}
@@ -2468,20 +2468,34 @@ MonoBehaviour:
   Module: {fileID: 114943217843082284}
   BombInfo: {fileID: 114254322482168384}
   Audio: {fileID: 114960229496981458}
-  Arrowage:
+  TriangleArrows:
+  - {fileID: 114994891463008392}
+  - {fileID: 114872448763172886}
+  - {fileID: 114568761144814606}
+  - {fileID: 114801588887327520}
+  ChevronArrows:
   - {fileID: 114749759503838218}
-  Druggage:
+  - {fileID: 114415931940570270}
+  - {fileID: 114424001343431464}
+  - {fileID: 114451402619244934}
+  CrosshairScreen: {fileID: 114189547510171262}
+  MainComponents:
+  - {fileID: 1893356294401264}
+  - {fileID: 1581719433183318}
+  Crosshair: {fileID: 1258758390450542}
+  CrosshairScreenBorder: {fileID: 1927397681307928}
+  MessageScreenBorder: {fileID: 1553656009260382}
+  ModuleBackground: {fileID: 1889133395541714}
+  Radar: {fileID: 1670399961840456}
+  MessageScreenText: {fileID: 102088345384385562}
+  ContentColors:
   - {fileID: 2100000, guid: c37c705737df77a4084c65f2dba55927, type: 2}
   - {fileID: 2100000, guid: 0c5f4edfb0d251a4a813c4046260a230, type: 2}
   - {fileID: 2100000, guid: 4a6a61204ad45e94b9f7840846b700b5, type: 2}
   - {fileID: 2100000, guid: 7af7e0972ed0c9c438b35d05d8d914d0, type: 2}
-  Radarage: {fileID: 1670399961840456}
-  Borderage:
+  BorderColors:
   - {fileID: 2100000, guid: 5e30040430f846542a8668869fd0b430, type: 2}
   - {fileID: 2100000, guid: 9e480934f45178b41bbaab32da39197b, type: 2}
-  Emptyage:
-  - {fileID: 1893356294401264}
-  - {fileID: 1812130481664258}
 --- !u!114 &114653887533060656
 MonoBehaviour:
   m_ObjectHideFlags: 1
