@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using KModkit;
+using UnityEngine.UI;
 
 public class AirStrikesScript : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class AirStrikesScript : MonoBehaviour
     public GameObject ModuleBackground;
     public GameObject Radar;
 
-    public TextMesh MessageScreenText;
+    public Text MessageScreenText;
     public Material[] ContentColors;
     public Material[] BorderColors;
 
@@ -37,15 +38,110 @@ public class AirStrikesScript : MonoBehaviour
         "Question Park", "Flashing Heights", "Alarmburg", "English Crest", 
         "Sueet Falls", "Match Acres", "Black Knoll", "Passwood"
     };
+    private static string[] names = new string[]
+    {
+        "1254", "Axodeau", "BlvdBroken", "Crazycaleb", "CyanixDash", "Heres_Fangy", "Ghastly",
+        "Konoko", "Nshep", "Procyon", "Quinn Wuest", "Willeh", "a_galvantula", 
+        "ghostsalt12", "meh", "redpenguiin", "vitzlo"
+    };
+    private Dictionary<int, string[]> forTopics = new Dictionary<int, string[]>()
+    {                       //1234567890123456789_1234567890123456789_1234567890123456789_1234567890123456789_1234567890123456789_
+        {  4, new string[] { "Dogs are superior to cats, simply because they are not cats.", 
+                             "Cats are spawns of hell.", 
+                             "Dogs love you unconditionally. Cats would kill you and take your house." } },
+        { 11, new string[] { "You have UNO on your Xbox!", 
+                             "Look, I can see RIGHT THERE in your Xbox library that you have UNO.", 
+                             "Why play DOS on your XCUBE when you can play UNO on your XBOX?" } },
+        { 12, new string[] { "It's big, it's round, so Pluto's a planet.", 
+                             "Pluto go spin around big yellow star, this means Pluto be planet." } },
+        { 10, new string[] { "Milk first leads to an uncomfortable mix of dry and wet cereal. Let the wetness equalize.",
+                             "You absolute cretins. Who adds milk before cereal?",
+                             "Cereal tastes better than milk, therefore cereal goes in before the milk." } },
+        {  6, new string[] { "C# says that Sunday is the first day of the week, so that's what it is.",
+                             "The first part of the day is the sun. The first part of the week is the Sunday.",
+                             "First day of the week is absolutely Sunday. Did you think they made it up for calendar sales or something?",
+                             "Last time I checked my calendar, Sunday was in the first column. Let that sink in." } },
+        {  3, new string[] { "Of course you ignore \"The\" with alphabetical ordering. Who doesn't?" } },
+        { 13, new string[] { "One. Three. Five. Nine. All other odd numbers are variants of these, and they all have E.",
+                             "One has an E. Three has an E. That's all the odd numbers! They all have E!",
+                             "The letter E is the most common letter in the language, included in all odd numbers.",
+                             "How did you pass First Grade without knowing how to spell numbers properly? OnE, thrEE, fivE, sEvEn, ninE, the end." } },
+        {  1, new string[] { "I just like pineapple, okay? Is that a bad thing to you? Really?", 
+                             "My friend is Italian and they approved pineapple on pizza. Argument closed.", 
+                             "Pineapple pizza is actually pretty good!" } },
+        {  7, new string[] { "If it's socially acceptable to pick up a bowl of soup and drink from it, then I claim that soup is a drink.", 
+                             "What do you do with the last bit of soup in the bowl? That’s right, you DRINK it." } },
+        {  2, new string[] { "Guys, Santa is real. I just saw him at the mall recently!",
+                             "If Santa's not real, then who's giving me all the gifts? A burglar?",
+                             "If Santa Claus didn't exist, then why is there a Wikipedia article about him?",
+                             "Of course Santa is real! Who else is that flying in the sky with those weird horses? Jesus? George Washington? My dad?",
+                             "If you seriously think that Santa is real then yes you are absolutely correct." } },
+        { 14, new string[] { "Sandy socks will be a long day.",
+                             "Socks and sandals has to be the most uncomfortable thing ever. Just go barefoot."  } },
+        {  0, new string[] { "Air Strikes is the only manual I read from Round 2 of KWSNE. Therefore it is the best one and must win.", 
+                             "A message to those who thinks Air Strikes shouldn't win round 2 of KWSNE: You guys are just wrong."  } },
+        { 15, new string[] { "Pepsi? PEPSI?? You lunatic. You buffoon. How do you prefer Pepsi over Coca-Cola??", 
+                             "Coca-Cola tells you the flavor of drink in its name. Cola. Pepsi doesn't tell you that at all. How am I supposed to know what I'm drinking?" } },
+        {  5, new string[] { "Well, if you think about it, hot dogs are kind of sandwiches. Just... kind of." } },
+        {  9, new string[] { "Stupid. How did we get the egg before the chicken? We got the chicken first.",  
+                             "Well, of course the chicken came before the egg. The egg can't raise itself..." } },
+        {  8, new string[] { "Winter is better than summer? Okay. Have fun freezing to death.", 
+                             "There's school in winter. Bad. There's no school in summer. Good.", 
+                             "Longer break in summer gives me more time for projects. Approved." } },
+    };
+    private Dictionary<int, string[]> againstTopics = new Dictionary<int, string[]>()
+    {
+        {  5, new string[] { "Dogs are inferior to cats, simply because they are dogs.",
+                             "Cats are clearly better than dogs, just like how catgirls are better than doggirls.",
+                             "Cats are better than dogs. I prefer my toddlers unbitten." } },
+        { 15, new string[] { "Who the hell has an Xbox that comes with Uno? Mine didn't.",
+                             "I own Xbox and I can confirm Uno is not on Xbox." } },
+        {  4, new string[] { "Pluto has no right to be considered a planet. It's too tiny.",
+                             "People. Pluto is a DWARF PLANET. Not a real one.",
+                             "I trust the real science and it says that Pluto isn't real (planet), therefore it shouldn't be real (planet).",
+                             "If Pluto's a planet, what's the limit? It's taking a bullet for science.",
+                             "Pluto is TOO SMALL to be a planet, just like your BRAIN is TOO SMALL to be in your HEAD." } },
+        {  7, new string[] { "Putting milk in before the cereal is healthier. There is less cereal in the bowl that way. More milk, less sugar, better health. It's good for you.",
+                             "Soggy cereal is the best cereal, and it's soggier with milk before cereal." } },
+        { 14, new string[] { "The weekEND includes Sunday. Checkmate.",
+                             "In chinese monday is roughly translated as \"the first day of the week\" so y'all are wrong.",
+                             "It's called the weekEND for a reason, not the weekBEGINNING." } },
+        {  2, new string[] { "The module is called \"The Cube\", not \"Cube, The\". Why would you ignore the \"The\"?",
+                             "You must include \"The\" when sorting alphabetically! \"The\" is a word in the English language! Why would you ever ignore words?" } },
+        {  9, new string[] { "Come on, there's gotta be an odd number out there without an E in it!" } },
+        { 11, new string[] { "WHAT MONSTER CREATED PINEAPPLE PIZZA??", "My Italian friend does not approve pineapple on pizza therefore it is bad.",
+                             "Nobody wants a pineapple-only pizza. Pineapple can die." } },
+        { 12, new string[] { "Drinks can be drunk with straws, and drinking soup with a straw is wrong. Ergo, not a drink.",
+                             "If I ask for a drink and you hand me soup, you deserve the electric chair.",
+                             "Soup is usually salty in flavour, and drinks are flavoured anything but salty, so idk how soup can be a drink.",
+                             "Have you ever seen soup come in a cup? No? Of course not. Because soup is not a drink." } },
+        { 13, new string[] { "If you seriously think santa is real then you need a reality check.",
+                             "Santa can't be real. Ghosts are, but Santa? No way." } },
+        {  3, new string[] { "I still don't get the hate for socks with sandals. It's quite comfortable, imo." } },
+        {  1, new string[] { "Air Strikes is the only manual I read from Round 2 of KWSNE. Therefore it is the worst one and must not win.",
+                             "This manual sucks, it wouldn't even win a consolation prize let alone Round 2." } },
+        { 10, new string[] { "Did you just try to tell me that Coca-Cola is better than Pepsi? Deadass??",
+                             "Coca-Cola comes in a red can. Red is a bad color. Pepsi comes in a blue can. Blue is a good color. Drink Pepsi, kids." } },
+        {  0, new string[] { "No. No no no no no. Hot dogs are far from sandwiches. Very, very far.",
+                             "Nah, hot dogs are tacos. Fight me." } },
+        {  8, new string[] { "If I understand correctly, eggs have been around way longer than chickens.", 
+                             "You never said \"chicken\" eggs, did you? Dinosaurs laid eggs way before chickens existed.",
+                             "All chickens come from eggs, even the first one. The egg must have come before the chicken!",
+                             "The egg mentioned in the problem didn't specify that it was a *chicken* egg now did it? Therefore, the egg came first." } },
+        {  6, new string[] { "Winter allows me to stay inside and avoid talking to people. I hate trying to appear civilized. Let me play with my dollhouse!",
+                             "I get to throw snowballs at people during winter! Why wouldn't I love winter?" } }
+    };
     private int _moduleId;
     private static int _moduleIdCounter = 1;
     private bool _moduleSolved;
     private bool wantRotation = true;
     private bool soundOnClick;
+    private bool _animating;
     private float elapsed = 0f;
     private int currentLocation;
     private int startingLocation;
     private int finalLocation;
+
 
     private void Awake()
     {
@@ -80,12 +176,16 @@ public class AirStrikesScript : MonoBehaviour
     private void GenerateModule()
     {
         startingLocation = Random.Range(0, 16);
+        finalLocation = Random.Range(0, 16);
         currentLocation = startingLocation;
         bool[] startingArray = GenerateBoolArray(startingLocation);
         soundOnClick = startingArray[10];
-        DisplayModule(startingArray);
+        DisplayModule(startingArray, finalLocation);
 
         Debug.LogFormat("[Air Strikes #{0}] Starting Location: {1}", _moduleId, locations[startingLocation]);
+        Debug.LogFormat("[Air Strikes #{0}] Final Location: {1}", _moduleId, locations[finalLocation]);
+        Debug.Log(startingLocation + "->" + finalLocation);
+
     }
 
     //Arrow OnInteractHandler
@@ -126,10 +226,25 @@ public class AirStrikesScript : MonoBehaviour
     //Crosshair Screen onInteract Handler
     private bool SubmitLocation()
     {
-        Audio.PlaySoundAtTransform("airStrikesSubmitSound", transform); // Onclick custom sound
-        if (currentLocation != finalLocation) Module.HandleStrike();
-
+        if (!_animating) StartCoroutine(SubmitSequence());
+        //TODO: Solve/Strike Anim + Correct Delays
         return false;
+    }
+
+    private IEnumerator SubmitSequence()
+    {
+        _animating = true;
+        Audio.PlaySoundAtTransform("airStrikesSubmitSound", transform); // Onclick custom sound
+        yield return new WaitForSeconds(10f);
+        if (currentLocation != finalLocation)
+        {
+            Module.HandleStrike();
+        }
+        else
+        {
+            Module.HandlePass();
+        }
+        _animating = false;
     }
 
     //Boolean array
@@ -152,7 +267,7 @@ public class AirStrikesScript : MonoBehaviour
     }
 
     //Generate module based on the boolean array.
-    private void DisplayModule(bool[] arr)
+    private void DisplayModule(bool[] arr, int ans)
     {
         //Arrow types are triangular and chevron. 
         bool arrowTypeIsTriangular = arr[4];
@@ -165,6 +280,16 @@ public class AirStrikesScript : MonoBehaviour
         //Border colors are Black and White.
         int crosshairBorderColorIndex
             = arr[7] ? 0 : 1;
+        //Select one random name based on condition
+        List<string> selectedNames = new List<string>();
+        foreach (string n in names)
+        {
+            if ((arr[5] ? n.Length >= 10 : n.Length < 10) && (arr[11] ? n.ToLower().ContainsIgnoreCase("e") : !n.ToLower().ContainsIgnoreCase("e")))
+            {
+                selectedNames.Add(n);
+            }
+        }
+        string selectedName = selectedNames[Random.Range(0, selectedNames.Count)];
         //Shows 1-6, or 7-12 minute even or odd, PM or AM
         string timestamp
             = (arr[1] ? Random.Range(1, 7) : Random.Range(7, 13)).ToString() + ":" +
@@ -180,7 +305,10 @@ public class AirStrikesScript : MonoBehaviour
         bool flippedScreens
             = arr[14];
 
-        //TODO: Usernames
+        string[] messages = Random.Range(0, 2) == 0 ? forTopics[ans] : againstTopics[ans];
+        string message = messages[Random.Range(0, messages.Length)];
+
+        Debug.Log(message);
 
         if (arrowTypeIsTriangular)
         {
@@ -203,7 +331,8 @@ public class AirStrikesScript : MonoBehaviour
         var messageMaterials = messageRenderer.materials;
         messageMaterials[1] = BorderColors[messageBorderColorIndex];
         messageRenderer.materials = messageMaterials;
-        MessageScreenText.text = "<Username>" + ": " + timestamp + "\n" + "<Message>";
+
+        MessageScreenText.text = selectedName + ": " + timestamp + "\n" + message;
 
         ModuleBackground.transform.rotation = Quaternion.Euler(new Vector3(0, statusLightPosition * 90, 0));
 
