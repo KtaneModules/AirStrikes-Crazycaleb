@@ -327,7 +327,7 @@ public class AirStrikesScript : MonoBehaviour
 
         MessageScreenText.text = selectedName + ": " + timestamp + "\n" + message;
 
-        ModuleBackground.transform.rotation = Quaternion.Euler(new Vector3(0, statusLightPosition * 90, 0));
+        ModuleBackground.transform.localRotation = Quaternion.Euler(new Vector3(0, statusLightPosition * 90, 0));
 
         if (flippedScreens)
         {
