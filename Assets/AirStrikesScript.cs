@@ -250,14 +250,13 @@ public class AirStrikesScript : MonoBehaviour
     private bool[] GenerateBoolArray(int initialPosition)
     {
         bool[] arr = new bool[16];
-        for (int i = 0; i < 16; i++) 
-        { 
+        for (int i = 0; i < 16; i++)
             arr[i] = Random.Range(0, 2) != 0;
-            //Guarantee specified is false
-            if (i%4 == initialPosition % 4 || i/4 == initialPosition / 4 ) { arr[i] = false; }
-        }
+        Debug.Log("Initial Position: " + initialPosition);
         //Guarantee specified is true
-        for (int i = initialPosition; i < 2 * initialPosition; i += 3) arr[i % 16] = true;
+        for (int i = initialPosition+3; i <=initialPosition + 9; i += 3) { arr[i % 16] = true; Debug.Log("This array position is forced true on generation: " + i); };
+        //Guarantee specified is false
+        for (int i = 0; i < 16; i++) if (i%4 == initialPosition % 4 || i/4 == initialPosition / 4 ) { arr[i] = false; Debug.Log("This array position is forced false on generation: " + i); }
         string boolStr = "";
         for (int i = 0; i < 16; i++) 
             boolStr = boolStr + arr[i].ToString() + " ";

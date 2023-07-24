@@ -727,7 +727,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1889133395541714}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -735,7 +735,7 @@ Transform:
   - {fileID: 4161782794445306}
   m_Father: {fileID: 4796660266098002}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4150498156657860
 Transform:
   m_ObjectHideFlags: 1
@@ -2236,9 +2236,9 @@ TextMesh:
   m_GameObject: {fileID: 1133095377692152}
   m_Text: '<b>Blananas2</b>: <color=#176F1FFF>12:01 AM</color>
 
-    Pineapple is good on
+    <style font-size:150px>Pineapple is good on
 
-    pizza'
+    pizza</style>'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -2483,7 +2483,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 248bb03864dc36548ae4f1973dc26e6e, type: 3}
-    m_FontSize: 20
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2925,7 +2925,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1928208773606710}
   m_LocalRotation: {x: 0.7071069, y: -0.000000084293696, z: 0.00000008429371, w: 0.70710677}
-  m_LocalPosition: {x: 0, y: 0, z: 0.08000006}
+  m_LocalPosition: {x: 0, y: 0, z: 0.094}
   m_LocalScale: {x: 0.001, y: 0.002, z: 0.001}
   m_Children:
   - {fileID: 224441879161301864}
@@ -2934,6 +2934,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.095000006, y: 0.010999994}
-  m_SizeDelta: {x: 190, y: 80}
+  m_AnchoredPosition: {x: -0.095000006, y: 0.011}
+  m_SizeDelta: {x: 190, y: 90}
   m_Pivot: {x: 0, y: 1}
