@@ -42,7 +42,7 @@ public class AirStrikesScript : MonoBehaviour
     {
         "1254", "Axodeau", "BlvdBroken", "Crazycaleb", "CyanixDash", "Heres_Fangy", "Ghastly",
         "Konoko", "Nshep", "Procyon", "Quinn Wuest", "Willeh", "a_galvantula", 
-        "ghostsalt12", "meh", "redpenguiin", "vitzlo"
+        "ghostsalt12", "meh", "redpenguiin", "vitzlo", "Usernam3"
     };
     private Dictionary<int, string[]> forTopics = new Dictionary<int, string[]>()
     {
