@@ -14,7 +14,10 @@ MonoBehaviour:
   id: airStrikes
   title: Air Strikes
   author: Crazycaleb
-  description: 121.80.132.119
+  description: "121.80.132.119\n\nSomeone is disagreeing with you on the internet!
+    To\r solve the module, call an air strike on their house.\n\nWinning manual of
+    the KWsNE Rebooted Strike/Solve Round\n\nManual by EpicToast, implemented by Crazycaleb
+    and Fang"
   version: 1.0
   outputFolder: build
-  previewImage: {fileID: 2800000, guid: bd5c1f4881f57d54481b44e4c8a7779a, type: 3}
+  previewImage: {fileID: 2800000, guid: 1f08d2fd634e10349866d545330d3f3a, type: 3}
