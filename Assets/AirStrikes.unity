@@ -152,6 +152,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114943217843082284, guid: e9b9f00a8d68cf34d9e41a2f36f29316,
+        type: 2}
+      propertyPath: ModuleType
+      value: airStrikes
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9b9f00a8d68cf34d9e41a2f36f29316, type: 2}
   m_IsPrefabParent: 0
