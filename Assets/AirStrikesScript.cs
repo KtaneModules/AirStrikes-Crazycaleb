@@ -238,11 +238,15 @@ public class AirStrikesScript : MonoBehaviour
         yield return new WaitForSeconds(10f);
         if (currentLocation != finalLocation)
         {
+            
             Module.HandleStrike();
+            Audio.PlaySoundAtTransform("TargetMissed", transform); // custom strike sound
         }
         else
         {
+            
             Module.HandlePass();
+            Audio.PlaySoundAtTransform("TargetAcquired", transform); // custom solve sound
         }
         _animating = false;
     }
