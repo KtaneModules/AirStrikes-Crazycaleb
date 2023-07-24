@@ -229,7 +229,7 @@ public class AirStrikesScript : MonoBehaviour
         _animating = true;
         Debug.LogFormat("[Air Strikes #{0}] Submitted Location: {1}", _moduleId, locations[ans]);
         Audio.PlaySoundAtTransform("airStrikesSubmitSound", transform); // Onclick custom sound
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(15f);
         if (ans != finalLocation)   
         {
             Module.HandleStrike();
