@@ -45,7 +45,7 @@ public class AirStrikesScript : MonoBehaviour
         "ghostsalt12", "meh", "redpenguiin", "vitzlo"
     };
     private Dictionary<int, string[]> forTopics = new Dictionary<int, string[]>()
-    {                       //1234567890123456789_1234567890123456789_1234567890123456789_1234567890123456789_1234567890123456789_
+    {
         {  4, new string[] { "Dogs are superior to cats, simply because they are not cats.", 
                              "Cats are spawns of hell.", 
                              "Dogs love you unconditionally. Cats would kill you and take your house." } },
@@ -184,8 +184,6 @@ public class AirStrikesScript : MonoBehaviour
 
         Debug.LogFormat("[Air Strikes #{0}] Starting Location: {1}", _moduleId, locations[startingLocation]);
         Debug.LogFormat("[Air Strikes #{0}] Final Location: {1}", _moduleId, locations[finalLocation]);
-        Debug.Log(startingLocation + "->" + finalLocation);
-
     }
 
     //Arrow OnInteractHandler
@@ -226,25 +224,23 @@ public class AirStrikesScript : MonoBehaviour
     //Crosshair Screen onInteract Handler
     private bool SubmitLocation()
     {
-        if (!_animating) StartCoroutine(SubmitSequence());
+        if (!_animating) StartCoroutine(SubmitSequence(currentLocation));
         //TODO: Solve/Strike Anim + Correct Delays
         return false;
     }
 
-    private IEnumerator SubmitSequence()
+    private IEnumerator SubmitSequence(int ans)
     {
         _animating = true;
         Audio.PlaySoundAtTransform("airStrikesSubmitSound", transform); // Onclick custom sound
-        yield return new WaitForSeconds(10f);
-        if (currentLocation != finalLocation)
+        yield return new WaitForSeconds(8.1f);
+        if (ans != finalLocation)
         {
-            
             Module.HandleStrike();
             Audio.PlaySoundAtTransform("TargetMissed", transform); // custom strike sound
         }
         else
         {
-            
             Module.HandlePass();
             Audio.PlaySoundAtTransform("TargetAcquired", transform); // custom solve sound
         }
@@ -277,10 +273,10 @@ public class AirStrikesScript : MonoBehaviour
         bool arrowTypeIsTriangular = arr[4];
         //Content colors are Red, Yellow, Blue, Purple.
         int arrowColorIndex
-            = arr[0] && arr[3] ? 2 : (arr[0] ? 0 : (arr[3] ? 1 : 3));
+            = (arr[0] && arr[3]) ? 2 : (arr[0] ? 0 : (arr[3] ? 1 : 3));
         //Content colors are Red, Yellow, Blue, Purple.
         int crosshairColorIndex
-            = arr[9] && arr[12] ? 3 : (arr[9] ? 1 : (arr[12] ? 0 : 2));
+            = (arr[9] && arr[12]) ? 3 : (arr[9] ? 1 : (arr[12] ? 0 : 2));
         //Border colors are Black and White.
         int crosshairBorderColorIndex
             = arr[7] ? 0 : 1;
@@ -304,10 +300,11 @@ public class AirStrikesScript : MonoBehaviour
             = arr[13] ? 0 : 1;
         //Status Light directional are TR, BR, BL, TL
         int statusLightPosition
-            = arr[8] && arr[15] ? 0 : (arr[8] ? 3 : (arr[15] ? 1 : 2));
+            = (arr[8] && arr[15]) ? 0 : (arr[8] ? 3 : (arr[15] ? 1 : 2));
         //Flips the crosshair and message screens.
         bool flippedScreens
             = arr[14];
+        soundOnClick = arr[10];
 
         string[] messages = Random.Range(0, 2) == 0 ? forTopics[ans] : againstTopics[ans];
         string message = messages[Random.Range(0, messages.Length)];
