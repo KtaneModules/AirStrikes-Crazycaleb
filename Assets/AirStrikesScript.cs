@@ -179,7 +179,6 @@ public class AirStrikesScript : MonoBehaviour
         finalLocation = Random.Range(0, 16);
         currentLocation = startingLocation;
         bool[] startingArray = GenerateBoolArray(startingLocation);
-        soundOnClick = startingArray[10];
         DisplayModule(startingArray, finalLocation);
 
         Debug.LogFormat("[Air Strikes #{0}] Starting Location: {1}", _moduleId, locations[startingLocation]);
@@ -251,17 +250,17 @@ public class AirStrikesScript : MonoBehaviour
     private bool[] GenerateBoolArray(int initialPosition)
     {
         bool[] arr = new bool[16];
-        string boolStr = "";
         for (int i = 0; i < 16; i++) 
         { 
             arr[i] = Random.Range(0, 2) != 0;
             //Guarantee specified is false
             if (i%4 == initialPosition % 4 || i/4 == initialPosition / 4 ) { arr[i] = false; }
-            boolStr = boolStr + arr[i].ToString() + " ";
         }
         //Guarantee specified is true
         for (int i = initialPosition; i < 2 * initialPosition; i += 3) arr[i % 16] = true;
-
+        string boolStr = "";
+        for (int i = 0; i < 16; i++) 
+            boolStr = boolStr + arr[i].ToString() + " ";
         Debug.Log("Conditions: " + boolStr + " ");
         return arr;
     }
