@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &818219505
+--- !u!1001 &52247181
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -151,29 +151,6 @@ Prefab:
     - target: {fileID: 4796660266098002, guid: e9b9f00a8d68cf34d9e41a2f36f29316, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 102088345384385562, guid: e9b9f00a8d68cf34d9e41a2f36f29316,
-        type: 2}
-      propertyPath: m_Text
-      value: '<b>Blananas2</b>: <color=#176F1FFF>12:01 AM</color>
-
-        <style font-size:150px>Pineapple is good on
-
-        pizza</style>'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114515907088585688, guid: e9b9f00a8d68cf34d9e41a2f36f29316,
-        type: 2}
-      propertyPath: m_Text
-      value: '<b>Blananas2</b>: <color=#176F1FFF>12:01 AM</color>
-
-        Pineapple is good on
-
-        pizza'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114515907088585688, guid: e9b9f00a8d68cf34d9e41a2f36f29316,
-        type: 2}
-      propertyPath: m_FontData.m_FontSize
-      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9b9f00a8d68cf34d9e41a2f36f29316, type: 2}
