@@ -2496,9 +2496,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '<b>Blananas2</b>: <color=#176F1FFF>12:01 AM</color>
 
-    Pineapple is good on
-
-    pizza'
+    Putting milk in before the cereal is healthier. There is less cereal in the bowl
+    that way. More milk, less sugar, better health. It''s good for you.'
 --- !u!114 &114543352370430530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2925,7 +2924,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1928208773606710}
   m_LocalRotation: {x: 0.7071069, y: -0.000000084293696, z: 0.00000008429371, w: 0.70710677}
-  m_LocalPosition: {x: 0, y: 0, z: 0.094}
+  m_LocalPosition: {x: 0, y: 0, z: 0.099}
   m_LocalScale: {x: 0.001, y: 0.002, z: 0.001}
   m_Children:
   - {fileID: 224441879161301864}
@@ -2935,5 +2934,5 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.095000006, y: 0.011}
-  m_SizeDelta: {x: 190, y: 90}
+  m_SizeDelta: {x: 190, y: 100}
   m_Pivot: {x: 0, y: 1}
