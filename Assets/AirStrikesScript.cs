@@ -251,7 +251,10 @@ public class AirStrikesScript : MonoBehaviour
         for (int i = 0; i < 16; i++)
             arr[i] = Random.Range(0, 2) != 0;
         //Guarantee specified is true
-        for (int i = initialPosition+3; i <=initialPosition + 9; i += 3) { arr[i % 16] = true; };
+        for (int i = 0; i < 4; i++) { 
+            arr[i*4 + Random.Range(0, 4)] = true; 
+            arr[Random.Range(0, 4)*4 + i] = true;
+        };
         //Guarantee specified is false
         for (int i = 0; i < 16; i++) if (i%4 == initialPosition % 4 || i/4 == initialPosition / 4 ) { arr[i] = false; }
         string boolStr = "";
