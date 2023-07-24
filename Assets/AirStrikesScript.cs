@@ -229,11 +229,12 @@ public class AirStrikesScript : MonoBehaviour
         _animating = true;
         Debug.LogFormat("[Air Strikes #{0}] Submitted Location: {1}", _moduleId, locations[ans]);
         Audio.PlaySoundAtTransform("airStrikesSubmitSound", transform); // Onclick custom sound
-        yield return new WaitForSeconds(8.1f);
+        yield return new WaitForSeconds(10f);
         if (ans != finalLocation)   
         {
             Module.HandleStrike();
             Audio.PlaySoundAtTransform("TargetMissed", transform); // custom strike sound
+            currentLocation = startingLocation;
         }
         else
         {
@@ -339,7 +340,7 @@ public class AirStrikesScript : MonoBehaviour
         Debug.LogFormat("[Air Strikes #{0}]: The arrow buttons are in {1} and are {2}.", _moduleId, (arr[0] && arr[3]) ? "blue" : (arr[0] ? "red" : (arr[3] ? "yellow" : "purple")), arrowTypeIsTriangular ? "triangles" : "not triangles");
         Debug.LogFormat("[Air Strikes #{0}]: The crosshair is in {1} with {2} frame.", _moduleId, (arr[9] && arr[12]) ? "purple" : (arr[9] ? "yellow" : (arr[12] ? "Red" : "blue")), arr[7] ? "black" : "white" );
         Debug.LogFormat("[Air Strikes #{0}]: The message is in {1} frame and is {2} the crosshair.", _moduleId, arr[13] ? "black" : "white", arr[14] ? "above" : "below");
-        Debug.LogFormat("[Air Strikes #{0}]: The message reads: \n{1}", _moduleId, MessageScreenText.text);
+        Debug.LogFormat("[Air Strikes #{0}]: The message reads: {1}", _moduleId, selectedName + ": " + timestamp + " - " + message);
         Debug.LogFormat("[Air Strikes #{0}]: The status light is in {1}.", _moduleId, (arr[8] && arr[15]) ? "top right" : (arr[8] ? "top left" : (arr[15] ? "bottom right" : "bottom left")));
         Debug.LogFormat("[Air Strikes #{0}]: Clicking the screen {1} a sound.", _moduleId, arr[10] ? "makes" : "does not make");
 
