@@ -205,7 +205,6 @@ public class AirStrikesScript : MonoBehaviour
                 currentLocation = (currentLocation + 4) % 16;
                 break;
         }
-        Debug.Log(currentLocation); //DEBUG CURRENT LOCATION
         return false;
     }
 
@@ -213,7 +212,6 @@ public class AirStrikesScript : MonoBehaviour
     private bool ResetLocation()
     {
         currentLocation = startingLocation;
-        Debug.Log(currentLocation); //DEBUG CURRENT LOCATION
         if (soundOnClick) { Audio.PlaySoundAtTransform("HingeTap", transform); }; // Onclick custom sound
         return false;
     }
@@ -229,9 +227,10 @@ public class AirStrikesScript : MonoBehaviour
     private IEnumerator SubmitSequence(int ans)
     {
         _animating = true;
+        Debug.LogFormat("[Air Strikes #{0}] Submitted Location: {1}", _moduleId, locations[ans]);
         Audio.PlaySoundAtTransform("airStrikesSubmitSound", transform); // Onclick custom sound
         yield return new WaitForSeconds(8.1f);
-        if (ans != finalLocation)
+        if (ans != finalLocation)   
         {
             Module.HandleStrike();
             Audio.PlaySoundAtTransform("TargetMissed", transform); // custom strike sound
@@ -250,15 +249,14 @@ public class AirStrikesScript : MonoBehaviour
         bool[] arr = new bool[16];
         for (int i = 0; i < 16; i++)
             arr[i] = Random.Range(0, 2) != 0;
-        Debug.Log("Initial Position: " + initialPosition);
         //Guarantee specified is true
-        for (int i = initialPosition+3; i <=initialPosition + 9; i += 3) { arr[i % 16] = true; Debug.Log("This array position is forced true on generation: " + i); };
+        for (int i = initialPosition+3; i <=initialPosition + 9; i += 3) { arr[i % 16] = true; };
         //Guarantee specified is false
-        for (int i = 0; i < 16; i++) if (i%4 == initialPosition % 4 || i/4 == initialPosition / 4 ) { arr[i] = false; Debug.Log("This array position is forced false on generation: " + i); }
+        for (int i = 0; i < 16; i++) if (i%4 == initialPosition % 4 || i/4 == initialPosition / 4 ) { arr[i] = false; }
         string boolStr = "";
         for (int i = 0; i < 16; i++) 
             boolStr = boolStr + arr[i].ToString() + " ";
-        Debug.Log("Conditions: " + boolStr + " ");
+        Debug.LogFormat("[Air Strikes #{0}] The conditions, in reading order are: {1}", _moduleId, boolStr);
         return arr;
     }
 
@@ -305,8 +303,6 @@ public class AirStrikesScript : MonoBehaviour
         string[] messages = Random.Range(0, 2) == 0 ? forTopics[ans] : againstTopics[ans];
         string message = messages[Random.Range(0, messages.Length)];
 
-        Debug.Log(message);
-
         if (arrowTypeIsTriangular)
         {
             foreach (KMSelectable arrow in ChevronArrows) arrow.gameObject.SetActive(false);
@@ -338,6 +334,71 @@ public class AirStrikesScript : MonoBehaviour
             MainComponents[1].transform.localPosition = new Vector3(0f, 0f, 0.12f);
             MainComponents[0].transform.localPosition = new Vector3(0f, 0f, -0.04f);
         }
+
+        //Logging
+        Debug.LogFormat("[Air Strikes #{0}]: The arrow buttons are in {1} and are {2}.", _moduleId, (arr[0] && arr[3]) ? "blue" : (arr[0] ? "red" : (arr[3] ? "yellow" : "purple")), arrowTypeIsTriangular ? "triangles" : "not triangles");
+        Debug.LogFormat("[Air Strikes #{0}]: The crosshair is in {1} with {2} frame.", _moduleId, (arr[9] && arr[12]) ? "purple" : (arr[9] ? "yellow" : (arr[12] ? "Red" : "blue")), arr[7] ? "black" : "white" );
+        Debug.LogFormat("[Air Strikes #{0}]: The message is in {1} frame and is {2} the crosshair.", _moduleId, arr[13] ? "black" : "white", arr[14] ? "above" : "below");
+        Debug.LogFormat("[Air Strikes #{0}]: The message reads: \n{1}", _moduleId, MessageScreenText.text);
+        Debug.LogFormat("[Air Strikes #{0}]: The status light is in {1}.", _moduleId, (arr[8] && arr[15]) ? "top right" : (arr[8] ? "top left" : (arr[15] ? "bottom right" : "bottom left")));
+        Debug.LogFormat("[Air Strikes #{0}]: Clicking the screen {1} a sound.", _moduleId, arr[10] ? "makes" : "does not make");
+
+    }
+    #pragma warning disable 414
+    string TwitchHelpMessage = "Use !{0} l/u/r/d // reset // submit.";
+    #pragma warning restore 414
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+        string validInputs = "lurd";
+        command = command.ToLowerInvariant().Trim();
+        Match m = Regex.Match(command, @"^(?:([lurd]+)|(submit|reset))$");
+        /*Capture Groups:
+            1.  directional
+            2.  submit/clear
+        */
+        if (!m.Success)
+            yield break;
+        yield return null;
+        if (m.Groups[1].Success)
+        {
+            char[] directions = m.Groups[1].Value.ToCharArray();
+            foreach (char d in directions)
+            {
+                yield return new WaitForSeconds(0.1f);
+                if (TriangleArrows[validInputs.IndexOf(d)].gameObject.activeSelf) TriangleArrows[validInputs.IndexOf(d)].OnInteract();
+                else ChevronArrows[validInputs.IndexOf(d)].OnInteract();
+            }
+        }
+        else if (m.Groups[2].Success)
+        {
+            switch (m.Groups[2].Value)
+            {
+                case "submit":
+                    CrosshairScreen.OnInteract();
+                    break;
+                case "reset":
+                    MessageScreen.OnInteract();
+                    break;
+            }
+        }
+        else { Debug.LogFormat("[Air Strikes #{0}] Error in TP Handling, please contact developer.", _moduleId); };
     }
 
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        yield return null;
+        while (currentLocation/4 != finalLocation/4)
+        {
+            yield return new WaitForSeconds(.1f);
+            if (TriangleArrows[3].gameObject.activeSelf) TriangleArrows[3].OnInteract();
+            else ChevronArrows[3].OnInteract();
+        };
+        while (currentLocation != finalLocation)
+        {   
+            yield return new WaitForSeconds(.1f);
+            if (TriangleArrows[2].gameObject.activeSelf) TriangleArrows[2].OnInteract();
+            else ChevronArrows[2].OnInteract();
+        };
+        CrosshairScreen.OnInteract();
+    }
 }
