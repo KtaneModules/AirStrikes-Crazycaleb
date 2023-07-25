@@ -13,6 +13,7 @@ public class AirStrikesScript : MonoBehaviour
     public KMBombModule Module;
     public KMBombInfo BombInfo;
     public KMAudio Audio;
+    public KMColorblindMode ColorblindMode;
 
     public KMSelectable[] TriangleArrows;
     public KMSelectable[] ChevronArrows;
@@ -27,6 +28,7 @@ public class AirStrikesScript : MonoBehaviour
     public GameObject Radar;
 
     public Text MessageScreenText;
+    public TextMesh[] ColorblindTexts;
     public Material[] ContentColors;
     public Material[] BorderColors;
 
@@ -129,12 +131,14 @@ public class AirStrikesScript : MonoBehaviour
         {  6, new string[] { "Winter allows me to stay inside and avoid talking to people. I hate trying to appear civilized. Let me play with my dollhouse!",
                              "I get to throw snowballs at people during winter! Why wouldn't I love winter?" } }
     };
+    private static string[] colors = new string[] { "Red", "Yellow", "Blue", "Purple", "Black", "White" };
     private int _moduleId;
     private static int _moduleIdCounter = 1;
     private bool _moduleSolved;
     private bool wantRotation = true;
     private bool soundOnClick;
     private bool _animating;
+    private bool colorblindMode;
     private float elapsed = 0f;
     private int currentLocation;
     private int startingLocation;
@@ -158,6 +162,7 @@ public class AirStrikesScript : MonoBehaviour
     {
         _moduleId = _moduleIdCounter++;
         StartCoroutine(RadarRotation());
+        colorblindMode = ColorblindMode.ColorblindModeActive;
 
         GenerateModule();
     }
@@ -272,12 +277,15 @@ public class AirStrikesScript : MonoBehaviour
         //Content colors are Red, Yellow, Blue, Purple.
         int arrowColorIndex
             = (arr[0] && arr[3]) ? 2 : (arr[0] ? 0 : (arr[3] ? 1 : 3));
+        string arrowColorName = colors[arrowColorIndex];
         //Content colors are Red, Yellow, Blue, Purple.
         int crosshairColorIndex
             = (arr[9] && arr[12]) ? 3 : (arr[9] ? 1 : (arr[12] ? 0 : 2));
+        string crosshairColorName = colors[crosshairColorIndex];
         //Border colors are Black and White.
         int crosshairBorderColorIndex
             = arr[7] ? 0 : 1;
+        string crosshairBorderColorName = colors[crosshairBorderColorIndex + 4];
         //Select one random name based on condition
         List<string> selectedNames = new List<string>();
         foreach (string n in names)
@@ -296,6 +304,7 @@ public class AirStrikesScript : MonoBehaviour
         //Border colors are Black and White.
         int messageBorderColorIndex
             = arr[13] ? 0 : 1;
+        string messageBorderColorName = colors[messageBorderColorIndex + 4];
         //Status Light directional are TR, BR, BL, TL
         int statusLightPosition
             = (arr[8] && arr[15]) ? 0 : (arr[8] ? 3 : (arr[15] ? 1 : 2));
@@ -339,23 +348,33 @@ public class AirStrikesScript : MonoBehaviour
             MainComponents[0].transform.localPosition = new Vector3(0f, 0f, -0.04f);
         }
 
+        //Colorblind texts
+        ColorblindTexts[0].text = crosshairBorderColorName + "/" + arrowColorName;
+        ColorblindTexts[1].text = crosshairColorName;
+        ColorblindTexts[2].text = messageBorderColorName;
+        ColorblindTexts[0].color = arr[7] ? new Color32(0x00, 0x00, 0x00, 0xFF) : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+        ColorblindTexts[2].color = arr[13] ? new Color32(0x00, 0x00, 0x00, 0xFF) : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+
+        if (colorblindMode) foreach (TextMesh t in ColorblindTexts) t.gameObject.SetActive(true);
+        else foreach (TextMesh t in ColorblindTexts) t.gameObject.SetActive(false);
+
         //Logging
-        Debug.LogFormat("[Air Strikes #{0}]: The arrow buttons are in {1} and are {2}.", _moduleId, (arr[0] && arr[3]) ? "blue" : (arr[0] ? "red" : (arr[3] ? "yellow" : "purple")), arrowTypeIsTriangular ? "triangles" : "not triangles");
-        Debug.LogFormat("[Air Strikes #{0}]: The crosshair is in {1} with {2} frame.", _moduleId, (arr[9] && arr[12]) ? "purple" : (arr[9] ? "yellow" : (arr[12] ? "Red" : "blue")), arr[7] ? "black" : "white" );
-        Debug.LogFormat("[Air Strikes #{0}]: The message is in {1} frame and is {2} the crosshair.", _moduleId, arr[13] ? "black" : "white", arr[14] ? "above" : "below");
+        Debug.LogFormat("[Air Strikes #{0}]: The arrow buttons are in {1} and are {2}.", _moduleId, arrowColorName, arrowTypeIsTriangular ? "triangles" : "not triangles");
+        Debug.LogFormat("[Air Strikes #{0}]: The crosshair is in {1} with {2} frame.", _moduleId, crosshairColorName, crosshairBorderColorName);
+        Debug.LogFormat("[Air Strikes #{0}]: The message is in {1} frame and is {2} the crosshair.", _moduleId, messageBorderColorName, arr[14] ? "above" : "below");
         Debug.LogFormat("[Air Strikes #{0}]: The message reads: {1}", _moduleId, selectedName + ": " + timestamp + " - " + message);
         Debug.LogFormat("[Air Strikes #{0}]: The status light is in {1}.", _moduleId, (arr[8] && arr[15]) ? "top right" : (arr[8] ? "top left" : (arr[15] ? "bottom right" : "bottom left")));
         Debug.LogFormat("[Air Strikes #{0}]: Clicking the screen {1} a sound.", _moduleId, arr[10] ? "makes" : "does not make");
 
     }
     #pragma warning disable 414
-    string TwitchHelpMessage = "Use !{0} l/u/r/d // reset // submit.";
+    string TwitchHelpMessage = "Use !{0} l/u/r/d // reset // submit // colorblind.";
     #pragma warning restore 414
     IEnumerator ProcessTwitchCommand(string command)
     {
         string validInputs = "lurd";
         command = command.ToLowerInvariant().Trim();
-        Match m = Regex.Match(command, @"^(?:([lurd]+)|(submit|reset))$");
+        Match m = Regex.Match(command, @"^(?:([lurd]+)|(submit|reset|colorblind))$");
         /*Capture Groups:
             1.  directional
             2.  submit/clear
@@ -382,6 +401,9 @@ public class AirStrikesScript : MonoBehaviour
                     break;
                 case "reset":
                     MessageScreen.OnInteract();
+                    break;
+                case "colorblind":
+                    foreach (TextMesh t in ColorblindTexts) t.gameObject.SetActive(true);
                     break;
             }
         }
