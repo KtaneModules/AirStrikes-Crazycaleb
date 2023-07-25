@@ -252,20 +252,19 @@ public class AirStrikesScript : MonoBehaviour
     //Boolean array
     private bool[] GenerateBoolArray(int initialPosition)
     {
-        bool[] arr = new bool[16];
-        for (int i = 0; i < 16; i++)
-            arr[i] = Random.Range(0, 2) != 0;
-        //Guarantee specified is true
-        for (int i = 0; i < 4; i++) { 
-            arr[i*4 + Random.Range(0, 4)] = true; 
-            arr[Random.Range(0, 4)*4 + i] = true;
-        };
-        //Guarantee specified is false
-        for (int i = 0; i < 16; i++) if (i%4 == initialPosition % 4 || i/4 == initialPosition / 4 ) { arr[i] = false; }
-        string boolStr = "";
-        for (int i = 0; i < 16; i++) 
-            boolStr = boolStr + arr[i].ToString() + " ";
-        Debug.LogFormat("[Air Strikes #{0}] The conditions, in reading order are: {1}", _moduleId, boolStr);
+        var arr = new bool[16];
+        var targetX = initialPosition % 4;
+        var targetY = initialPosition / 4;
+        var rows = new bool[4];
+        var cols = new bool[4];
+        while (rows.Where(i => i == true).Count() != 3 || cols.Where(i => i == true).Count() != 3)
+        {
+            var randomPos = Enumerable.Range(0, 16).Where(i => i % 4 != targetX && i / 4 != targetY && !arr[i]).PickRandom();
+            arr[randomPos] = true;
+            rows[randomPos / 4] = true;
+            cols[randomPos % 4] = true;
+        }
+        Debug.LogFormat("[Air Strikes #{0}] The conditions, in reading order are: {1}", _moduleId, arr.Select(i => i ? "T" : "F").Join(" "));
         return arr;
     }
 
@@ -359,12 +358,12 @@ public class AirStrikesScript : MonoBehaviour
         else foreach (TextMesh t in ColorblindTexts) t.gameObject.SetActive(false);
 
         //Logging
-        Debug.LogFormat("[Air Strikes #{0}]: The arrow buttons are in {1} and are {2}.", _moduleId, arrowColorName, arrowTypeIsTriangular ? "triangles" : "not triangles");
-        Debug.LogFormat("[Air Strikes #{0}]: The crosshair is in {1} with {2} frame.", _moduleId, crosshairColorName, crosshairBorderColorName);
-        Debug.LogFormat("[Air Strikes #{0}]: The message is in {1} frame and is {2} the crosshair.", _moduleId, messageBorderColorName, arr[14] ? "above" : "below");
-        Debug.LogFormat("[Air Strikes #{0}]: The message reads: {1}", _moduleId, selectedName + ": " + timestamp + " - " + message);
-        Debug.LogFormat("[Air Strikes #{0}]: The status light is in {1}.", _moduleId, (arr[8] && arr[15]) ? "top right" : (arr[8] ? "top left" : (arr[15] ? "bottom right" : "bottom left")));
-        Debug.LogFormat("[Air Strikes #{0}]: Clicking the screen {1} a sound.", _moduleId, arr[10] ? "makes" : "does not make");
+        Debug.LogFormat("[Air Strikes #{0}] The arrow buttons are in {1} and are {2}.", _moduleId, arrowColorName, arrowTypeIsTriangular ? "triangles" : "not triangles");
+        Debug.LogFormat("[Air Strikes #{0}] The crosshair is in {1} with {2} frame.", _moduleId, crosshairColorName, crosshairBorderColorName);
+        Debug.LogFormat("[Air Strikes #{0}] The message is in {1} frame and is {2} the crosshair.", _moduleId, messageBorderColorName, arr[14] ? "above" : "below");
+        Debug.LogFormat("[Air Strikes #{0}] The message reads: {1}", _moduleId, selectedName + ": " + timestamp + " - " + message);
+        Debug.LogFormat("[Air Strikes #{0}] The status light is in {1}.", _moduleId, (arr[8] && arr[15]) ? "top right" : (arr[8] ? "top left" : (arr[15] ? "bottom right" : "bottom left")));
+        Debug.LogFormat("[Air Strikes #{0}] Clicking the screen {1} a sound.", _moduleId, arr[10] ? "makes" : "does not make");
 
     }
     #pragma warning disable 414
