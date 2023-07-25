@@ -72,17 +72,20 @@ public class AirStrikesScript : MonoBehaviour
                              "My friend is Italian and they approved pineapple on pizza. Argument closed.", 
                              "Pineapple pizza is actually pretty good!" } },
         {  7, new string[] { "If it's socially acceptable to pick up a bowl of soup and drink from it, then I claim that soup is a drink.", 
-                             "What do you do with the last bit of soup in the bowl? That’s right, you DRINK it." } },
+                             "What do you do with the last bit of soup in the bowl? That’s right, you DRINK it.",
+                             "If it's a liquid, it's a drink. Soup is definitely a liquid and therefore a drink." } },
         {  2, new string[] { "Guys, Santa is real. I just saw him at the mall recently!",
                              "If Santa's not real, then who's giving me all the gifts? A burglar?",
                              "If Santa Claus didn't exist, then why is there a Wikipedia article about him?",
                              "Of course Santa is real! Who else is that flying in the sky with those weird horses? Jesus? George Washington? My dad?",
-                             "If you seriously think that Santa is real then yes you are absolutely correct." } },
+                             "If you seriously think that Santa is real then yes you are absolutely correct.",
+                             "As a Santa believer, he's real. He ate the cookies I gave him last year!" } },
         { 14, new string[] { "Sandy socks will be a long day.",
                              "Socks and sandals has to be the most uncomfortable thing ever. Just go barefoot."  } },
         {  0, new string[] { "Air Strikes is the only manual I read from Round 2 of KWSNE. Therefore it is the best one and must win.", 
                              "A message to those who thinks Air Strikes shouldn't win round 2 of KWSNE: You guys are just wrong."  } },
-        { 15, new string[] { "Pepsi? PEPSI?? You lunatic. You buffoon. How do you prefer Pepsi over Coca-Cola??" } },
+        { 15, new string[] { "Pepsi? PEPSI?? You lunatic. You buffoon. How do you prefer Pepsi over Coca-Cola??",
+                             "Pepsi takes like nothing. Why would I take that over Coke?" } },
         {  5, new string[] { "Well, if you think about it, hot dogs are kind of sandwiches. Just... kind of." } },
         {  9, new string[] { "Stupid. How did we get the egg before the chicken? We got the chicken first.",  
                              "Well, of course the chicken came before the egg. The egg can't raise itself..." } },
@@ -119,7 +122,8 @@ public class AirStrikesScript : MonoBehaviour
                              "Santa can't be real. Ghosts are, but Santa? No way." } },
         {  3, new string[] { "I still don't get the hate for socks with sandals. It's quite comfortable, imo." } },
         {  1, new string[] { "Air Strikes is the only manual I read from Round 2 of KWSNE. Therefore it is the worst one and must not win.",
-                             "This manual sucks, it wouldn't even win a consolation prize let alone Round 2." } },
+                             "This manual sucks, it wouldn't even win a consolation prize let alone Round 2.",
+                             "Picketing was so much better than Air Strikes. That should win instead." } },
         { 10, new string[] { "Did you just try to tell me that Coca-Cola is better than Pepsi? Deadass??",
                              "Coca-Cola comes in a red can. Red is a bad color. Pepsi comes in a blue can. Blue is a good color. Drink Pepsi, kids." } },
         {  0, new string[] { "No. No no no no no. Hot dogs are far from sandwiches. Very, very far.",
@@ -129,7 +133,8 @@ public class AirStrikesScript : MonoBehaviour
                              "All chickens come from eggs, even the first one. The egg must have come before the chicken!",
                              "The egg mentioned in the problem didn't specify that it was a *chicken* egg now did it? Therefore, the egg came first." } },
         {  6, new string[] { "Winter allows me to stay inside and avoid talking to people. I hate trying to appear civilized. Let me play with my dollhouse!",
-                             "I get to throw snowballs at people during winter! Why wouldn't I love winter?" } }
+                             "I get to throw snowballs at people during winter! Why wouldn't I love winter?",
+                             "Hoodies are so much more cozier to wear than barely anything. Winter is for me." } }
     };
     private static string[] colors = new string[] { "Red", "Yellow", "Blue", "Purple", "Black", "White" };
     private int _moduleId;
