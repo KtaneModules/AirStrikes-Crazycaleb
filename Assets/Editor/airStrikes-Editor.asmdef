@@ -1,0 +1,10 @@
+{
+  "name": "airStrikes-Editor",
+  "references": [
+    "airStrikes"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": []
+}
