@@ -249,7 +249,7 @@ public class AirStrikesScript : MonoBehaviour
         else
         {
             Module.HandlePass();
-            Audio.PlaySoundAtTransform("TargetAcquired", transform); // custom solve sound
+            Audio.PlaySoundAtTransform("TargetNeutralized", transform); // custom solve sound
         }
         _animating = false;
     }
