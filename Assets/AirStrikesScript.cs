@@ -42,7 +42,7 @@ public class AirStrikesScript : MonoBehaviour
     };
     private static string[] names = new string[]
     {
-        "1254", "Axodeau", "BlvdBroken", "Crazycaleb", "CyanixDash", "Heres_Fangy", "Ghastly",
+        "1254", "Axodeau", "BlvdBroken", "Crazycaleb", "Heres_Fangy", "Ghastly",
         "Konoko", "Nshep", "Procyon", "Quinn Wuest", "Willeh", "a_galvantula", 
         "ghostsalt12", "meh", "redpenguiin", "vitzlo", "Usernam3"
     };
