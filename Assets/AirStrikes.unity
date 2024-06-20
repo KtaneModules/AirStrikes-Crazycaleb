@@ -300,6 +300,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114515907088585688, guid: e9b9f00a8d68cf34d9e41a2f36f29316,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Blananas2: 12:01 AM
+
+        Pineapple is good on
+
+        pizza.
+
+        Sample text 2
+
+        Sample text 3
+
+        Sample text 4'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9b9f00a8d68cf34d9e41a2f36f29316, type: 2}
   m_IsPrefabParent: 0
