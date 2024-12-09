@@ -18,6 +18,6 @@ MonoBehaviour:
     To\r solve the module, call an air strike on their house.\n\nWinning manual of
     the KWsNE Rebooted Strike/Solve Round\n\nManual by EpicToast, implemented by Crazycaleb
     and Fang"
-  version: 1.8
+  version: 1.9
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 1f08d2fd634e10349866d545330d3f3a, type: 3}
